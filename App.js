@@ -1,13 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import AppNavigator from './navigation/AppNavigator';
+
+import AppContext from './context/AppContext';
+import dummyfeed from './backend/FakeDB';
 
 export default function App() {
+
+  React.useEffect(() => {
+    StatusBar.setBarStyle('dark-content', true)
+  }, [])
+
+  const [username, setUsername] = React.useState('');
+  const [detailItem, setDetailItem] = React.useState();
+  const [addImage, setAddImage] = React.useState('https://www.emphysys.com/wp-content/uploads/2015/05/placeholder.png');
+  const [addMessage, setAddMessage] = React.useState('');
+  const [array, setArray] = React.useState(dummyfeed);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AppContext.Provider value={{
+      username,
+      setUsername,
+      detailItem,
+      setDetailItem,
+      addImage,
+      setAddImage,
+      addMessage,
+      setAddMessage,
+      array,
+      setArray
+
+    }}>
+
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+
+    </AppContext.Provider>
   );
 }
 
